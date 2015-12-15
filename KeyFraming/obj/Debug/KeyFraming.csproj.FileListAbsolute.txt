@@ -1,1 +1,9 @@
 c:\users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\bin\Debug\KeyFraming.exe.config
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\bin\Debug\KeyFraming.exe
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\bin\Debug\KeyFraming.pdb
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csprojResolveAssemblyReference.cache
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Form1.resources
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Properties.Resources.resources
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csproj.GenerateResource.Cache
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.exe
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.pdb

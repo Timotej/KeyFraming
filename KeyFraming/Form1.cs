@@ -15,6 +15,32 @@ namespace KeyFraming
         public Form1()
         {
             InitializeComponent();
+            timer1.Enabled = false;
+        }
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+        }
+
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int fps;
+            bool result = Int32.TryParse(textBox1.Text, out fps);
+            if (result)
+            {
+                timer1.Interval = 1000 / fps;
+            }
+            
+            timer1.Enabled = true;
         }
     }
 }

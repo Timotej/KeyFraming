@@ -12,16 +12,29 @@ namespace KeyFraming
 {
     public partial class Form1 : Form
     {
+        Slider slider;
+
         public Form1()
         {
             InitializeComponent();
+
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, false);
+            this.SetStyle(ControlStyles.Opaque, false);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+
             timer1.Enabled = false;
+            slider = new Slider(20, 400, 600, 400, Color.Black);
         }
 
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            slider.drawSlider(e.Graphics);
         }
 
 
@@ -41,6 +54,18 @@ namespace KeyFraming
             }
             
             timer1.Enabled = true;
+        }
+
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) {
+                slider.addSliderPoint(e.X, e.Y);
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                slider.removeSliderPoint(e.X, e.Y);
+            }
+            Invalidate();
         }
     }
 }

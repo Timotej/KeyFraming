@@ -115,6 +115,7 @@
             this.Controls.Add(this.radioButton1);
             this.Name = "Form1";
             this.Text = "KeyFrames";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 

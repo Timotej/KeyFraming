@@ -27,7 +27,7 @@ namespace KeyFraming
             this.SetStyle(ControlStyles.ResizeRedraw, true);
 
             timer1.Enabled = false;
-            slider = new Slider(20, 400, 600, 400, Color.Black);
+            slider = new Slider(50, 400, 550, 400, Color.Black);
         }
 
 

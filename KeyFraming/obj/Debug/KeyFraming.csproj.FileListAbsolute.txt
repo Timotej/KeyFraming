@@ -7,3 +7,12 @@ C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\D
 C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csproj.GenerateResource.Cache
 C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.exe
 C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\obj\Debug\KeyFraming.pdb
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\bin\Debug\KeyFraming.exe.config
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.exe
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.pdb
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\bin\Debug\KeyFraming.exe
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\bin\Debug\KeyFraming.pdb
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csprojResolveAssemblyReference.cache
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Form1.resources
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Properties.Resources.resources
+D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csproj.GenerateResource.Cache

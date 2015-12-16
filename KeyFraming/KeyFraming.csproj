@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Keyframe.cs" />
     <Compile Include="LinearInterpolation.cs" />
+    <Compile Include="Point3D.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

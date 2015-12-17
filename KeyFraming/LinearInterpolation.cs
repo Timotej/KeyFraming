@@ -74,7 +74,7 @@ namespace KeyFraming
 
 
 
-        private Point3D linearInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)
+        public Point3D linearInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)
         {
             var delta = ((actualTime - startingTime) / (nextTime - startingTime));
             var deltaX = (nextPosition.X - startingPosition.X) * delta;

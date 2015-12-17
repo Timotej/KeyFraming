@@ -17,7 +17,10 @@ namespace KeyFraming
         int endy;
         int width;
         Color sliderColor;
-        List<SliderPoint> sliderPoints;
+        Dictionary<double, SliderPoint> sliderPoints;
+        public KeyFramesControl kfc;
+        public double current;
+        
 
         public Slider(int sx, int sy, int ex, int ey, Color sc)
         {
@@ -27,9 +30,12 @@ namespace KeyFraming
             endy = ey;
             width = 10;
             sliderColor = sc;
-            sliderPoints = new List<SliderPoint>();
-            sliderPoints.Add(new SliderPoint(startx - 2 * width, starty - width, true));
-            sliderPoints.Add(new SliderPoint(endx, endy - width, false));
+            sliderPoints = new Dictionary<double, SliderPoint>();
+            sliderPoints.Add(0.0f, new SliderPoint(startx - 2 * width, starty - width, true));
+            sliderPoints.Add(5.0f, new SliderPoint(endx, endy - width, false));
+
+            kfc = new KeyFramesControl();
+            current = 0.0f;
         }
 
         public void drawSlider(Graphics g)
@@ -38,8 +44,8 @@ namespace KeyFraming
             p.Width = 3;
             g.DrawLine(p, startx, starty, endx, endy);
 
-            foreach (SliderPoint sp in sliderPoints) {
-                sp.drawSliderPoint(g, p);
+            foreach (KeyValuePair<double, SliderPoint> entry in sliderPoints) {
+                entry.Value.drawSliderPoint(g, p);
             }
             
         }
@@ -51,19 +57,21 @@ namespace KeyFraming
             if (x > startx - 2*width && x < endx+2*width && y > starty - (width / 2) && y < endy + (width / 2))
             {
                 deselectAll();
-                foreach (SliderPoint s in sliderPoints)
+                foreach (KeyValuePair<double, SliderPoint> s in sliderPoints)
                 {
-                    double dist = Math.Sqrt((nx - s.x) * (nx - s.x) + (ny - s.y) * (ny - s.y));
-                    if (dist < s.width) {
-                        s.selected = true;
+                    double dist = Math.Sqrt((nx - s.Value.x) * (nx - s.Value.x) + (ny - s.Value.y) * (ny - s.Value.y));
+                    if (dist < s.Value.width) {
+                        s.Value.selected = true;
+                        current = s.Key;
                         return;
                     }
                 }
 
                 
                 SliderPoint sp = new SliderPoint(nx, ny, true);
-                sliderPoints.Add(sp);
-                sliderPoints.Sort();
+                sliderPoints.Add(x / 100f, sp);
+                kfc.AddKeyFrame(x / 100f, new Cube());
+                current = x / 100f;
             } 
         }
 
@@ -71,18 +79,28 @@ namespace KeyFraming
         {
             int nx = x - width;
             int ny = starty - width;
-            SliderPoint delete = null;
+            double delete = -1f;
 
             if (x > startx && x < endx && y > starty - (width / 2) && y < endy + (width / 2))
             {
-                foreach (SliderPoint s in sliderPoints)
+                foreach (KeyValuePair<double, SliderPoint> s in sliderPoints)
                 {
-                    double dist = Math.Sqrt((nx - s.x) * (nx - s.x) + (ny - s.y) * (ny - s.y));
-                    if (dist < s.width)
+                    double dist = Math.Sqrt((nx - s.Value.x) * (nx - s.Value.x) + (ny - s.Value.y) * (ny - s.Value.y));
+                    if (dist < s.Value.width)
                     {
-                        delete = s;
+                        delete = s.Key;
                         break;
                     }
+                }
+            }
+            SliderPoint sp;
+            bool contains = sliderPoints.TryGetValue(delete, out sp);
+            if (contains)
+            {
+                if (sp.selected == true)
+                {
+                    sliderPoints[0.0f].selected = true;
+                    current = 0.0f;
                 }
             }
             sliderPoints.Remove(delete);
@@ -90,9 +108,9 @@ namespace KeyFraming
 
         public void deselectAll()
         {
-            foreach (SliderPoint sp in sliderPoints)
+            foreach (KeyValuePair<double, SliderPoint> s in sliderPoints)
             {
-                sp.selected = false;
+                s.Value.selected = false;
             }
         }
     }

@@ -1,0 +1,234 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+%\normalfont \normalsize 
+%\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+%\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+%\huge 
+Dynamika tuhých telies, definícia problému, rovnice pohybu (4 ODE), rýchlosť, zrýchlenie, uhľová rýchlosť a uhľové zrýchlenie, matica hybnosti (matica inercie) \\ % The assignment title
+%\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Timotej Krajči, Peter Šulík} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Tuhé teleso}
+
+Tuhé teleso je také, ktorého tvar sa nikdy počas simulácie nezdeformuje. Kvôli tuhosti je
+celkový pohyb telesa zložený z lineárneho pohybu ťažiska telesa a s rotácie telesa okolo
+svojho ťažiska.
+
+\section{Rovnice pohybu}
+$$ TODO ROVNICE $$
+
+\section{Rýchlosť}
+Rýchlosť je deriváciou pozície podľa času: $$v(t) = c'(t)$$
+
+\section{Zrýchlenie}
+Zrýchlenie je definované ako derivácia rýchlosti podľa času:
+$$ a(t) = v'(t) = (M^-1P)' = M^-1f$$
+
+\section{Uhlová rýchlosť}
+Uhľová rýchlosť je vektor, ktorý je rovnobežný s osou rotácie, ktorého dĺžka je  rovná rýchlosti rotácie. Rýchlosť rotácie je počet radiánov otočenia okolo osi za sekundu.
+$$ q'(t) = \frac{1}{2}Q(t)\omega(t)$$
+$$ TODO ROVNICE $$
+
+\section{Uhlové zrýchlenie}
+Uhľové zrýchlenie je definované ako derivácia uhľovej rýchlosťi v čase.
+$$\alpha(t) = \omega'(t) = (J^{-1}L)' = J^{-1}L + J^{-1}L' = J^{-1}\omega \times J\omega + J^{-1} \tau $$
+
+kde $\tau$ je krútiaci moment.
+
+\section{Matica hybnosti}
+Ak tuhé teleso pokladáme za množinu častíc s polohami $p_i$ a hmotnosťami $m_i$ tak tažisko
+telesa je definované ako:
+
+$$ c = \frac{\sum m_i p_i}{M} $$
+$$ M = \sum m_i $$
+
+Relatívna poloha i-tej častice je potom $p_i = c + r_i$ a absolútna poloha je $p_i = c + Rr_{0i}$ ,
+kde R zodpovedá matici rotácie a $r_{0i}$ je poloha i-tej častice na začiatku. \\
+Inerčný tenzor potom vieme definovať ako:
+$$TODO VZOREC$$
+Označenie r × značí antisymetrickú maticu vektorového súčinu:
+$$TODO VZOREC$$
+Narozdieľ od hmotnosti je inerčný senzor závislý od času. Keďže teleso sa nikdy nede-
+formuje, môžeme výpočet inerčného tenzora iba na začiatku a jeho zmenu dopočítavat ’
+pomocou matice rotácie:
+$$J_0 = - \sum m_i r_{0i}^{\times} r_{0i}^{\times} $$
+$$ J = RJ_{0}R^{T} $$
+$$ J^{-1} = RJ_{0}^{-1}R^{T}$$
+
+
+
+\begin{align} 
+\begin{split}
+(x+y)^3 	&= (x+y)^2(x+y)\\
+&=(x^2+2xy+y^2)(x+y)\\
+&=(x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3)\\
+&=x^3+3x^2y+3xy^2+y^3
+\end{split}					
+\end{align}
+
+
+%------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Problem title}
+
+\lipsum[2] % Dummy text
+
+\begin{align} 
+\begin{split}
+(x+y)^3 	&= (x+y)^2(x+y)\\
+&=(x^2+2xy+y^2)(x+y)\\
+&=(x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3)\\
+&=x^3+3x^2y+3xy^2+y^3
+\end{split}					
+\end{align}
+
+Tuhé teleso je také, ktorého tvar sa nikdy počas simulácie nezdeformuje. Kvôli tuhosti je
+celkový pohyb telesa zložený z lineárneho pohybu ťažiska telesa a s rotácie telesa okolo
+svojho ťažiska.
+
+%------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Heading on level 2 (subsection)}
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+\begin{align}
+A = 
+\begin{bmatrix}
+A_{11} & A_{21} \\
+A_{21} & A_{22}
+\end{bmatrix}
+\end{align}
+Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+
+%------------------------------------------------
+
+\subsubsection{Heading on level 3 (subsubsection)}
+
+\lipsum[3] % Dummy text
+
+\paragraph{Heading on level 4 (paragraph)}
+
+\lipsum[6] % Dummy text
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 2
+%----------------------------------------------------------------------------------------
+
+\section{Lists}
+
+%------------------------------------------------
+
+\subsection{Example of list (3*itemize)}
+\begin{itemize}
+	\item First item in a list 
+		\begin{itemize}
+		\item First item in a list 
+			\begin{itemize}
+			\item First item in a list 
+			\item Second item in a list 
+			\end{itemize}
+		\item Second item in a list 
+		\end{itemize}
+	\item Second item in a list 
+\end{itemize}
+
+%------------------------------------------------
+
+\subsection{Example of list (enumerate)}
+\begin{enumerate}
+\item First item in a list 
+\item Second item in a list 
+\item Third item in a list
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

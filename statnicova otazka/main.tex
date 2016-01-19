@@ -50,10 +50,6 @@ Dynamika tuhých telies, definícia problému, rovnice pohybu (4 ODE), rýchlos�
 
 \maketitle % Print the title
 
-%----------------------------------------------------------------------------------------
-%	PROBLEM 1
-%----------------------------------------------------------------------------------------
-
 \section{Tuhé teleso}
 
 Tuhé teleso je také, ktorého tvar sa nikdy počas simulácie nezdeformuje. Kvôli tuhosti je
@@ -61,7 +57,81 @@ celkový pohyb telesa zložený z lineárneho pohybu ťažiska telesa a s rotác
 svojho ťažiska.
 
 \section{Rovnice pohybu}
-$$ TODO ROVNICE $$
+$$ \frac{d}{dt}x(t) =\frac{d}{dt}
+\begin{pmatrix}
+c(t)\\
+q(t)\\
+P(t)\\
+L(t)
+\end{pmatrix}
+=
+\begin{pmatrix}
+v(t)\\
+\frac{1}{2}Q(t)\omega(t)\\
+f(t)\\
+\tau(t)
+\end{pmatrix}
+$$
+$$v(t) = M^{-1}P(t)$$
+$$\omega(t) = J(t)^{-1}L(t)$$
+$$ J^{-1} = R(t) J_{0}^{-1}R^{T}(t)$$
+
+$$
+Q(t) =
+\begin{pmatrix}
++q_{w}(t) 	&	-q_{z}(t) 	&	+q_{y}(t)\\
++q_{z}(t) 	&	+q_{w}(t) 	&	-q_{x}(t)\\
+-q_{y}(t) 	&	+q_{x}(t) 	&	+q_{w}(t)\\
+-q_{x}(t) 	&	-q_{y}(t) 	&	-q_{z}(t)
+\end{pmatrix}
+$$
+
+\subsection{Atribúty tuhých telies}
+
+
+\begin{enumerate}
+\item Poloha
+	\begin{enumerate}	
+	\item Pozícia $$ c(t) \in \mathbb{R}^{3 \times 1} $$
+	\item Orientácia $$ q(t) \in \mathbb{R}^{4 \times 1} $$
+	\end{enumerate}
+	
+
+\item Pohyb
+	\begin{enumerate}
+	\item Lineárna rýchlosť	$$ v(t) \in \mathbb{R}^{3 \times 1} $$
+	\item Uhlová rýchlosť	$$ \omega(t) \in \mathbb{R}^{3 \times 1} $$
+	\end{enumerate}
+	
+
+\item Zrýchlenia
+	\begin{enumerate}
+	\item Lineárne zrýchlenie	$$ a(t) \in \mathbb{R}^{3 \times 1} $$
+	\item Uhlové zrýchlenie		$$ \alpha(t) \in \mathbb{R}^{3 \times 1} $$
+	\end{enumerate}
+	
+
+\item Rozloženie hmotnosti:
+	\begin{enumerate}
+	\item Hmostnosť			$$ M \in \mathbb{R}^{1 \times 1} $$
+	\item Inerčný tensor	$$ J(t) \in \mathbb{R}^{3 \times 3} $$
+	\end{enumerate}
+	
+
+\item Hybnosti
+	\begin{enumerate}
+	\item Lineárna hybnosť	$$ P(t) \in \mathbb{R}^{3 \times 1} $$
+	\item Uhlová hybnosť	$$ L(t) \in \mathbb{R}^{3 \times 1} $$
+	\end{enumerate}
+	
+
+\item Sily
+	\begin{enumerate}
+	\item Sila				$$ f(t) \in \mathbb{R}^{3 \times 1} $$
+	\item Krútiaci moment	$$ c\tau(t) \in \mathbb{R}^{3 \times 1} $$
+	\end{enumerate}
+\end{enumerate}
+$ $
 
 \section{Rýchlosť}
 Rýchlosť je deriváciou pozície podľa času: $$v(t) = c'(t)$$
@@ -73,7 +143,15 @@ $$ a(t) = v'(t) = (M^-1P)' = M^-1f$$
 \section{Uhlová rýchlosť}
 Uhľová rýchlosť je vektor, ktorý je rovnobežný s osou rotácie, ktorého dĺžka je  rovná rýchlosti rotácie. Rýchlosť rotácie je počet radiánov otočenia okolo osi za sekundu.
 $$ q'(t) = \frac{1}{2}Q(t)\omega(t)$$
-$$ TODO ROVNICE $$
+$$
+Q(t) =
+\begin{pmatrix}
++q_{w}(t) 	&	-q_{z}(t) 	&	+q_{y}(t)\\
++q_{z}(t) 	&	+q_{w}(t) 	&	-q_{x}(t)\\
+-q_{y}(t) 	&	+q_{x}(t) 	&	+q_{w}(t)\\
+-q_{x}(t) 	&	-q_{y}(t) 	&	-q_{z}(t)
+\end{pmatrix}
+$$
 
 \section{Uhlové zrýchlenie}
 Uhľové zrýchlenie je definované ako derivácia uhľovej rýchlosťi v čase.
@@ -91,9 +169,22 @@ $$ M = \sum m_i $$
 Relatívna poloha i-tej častice je potom $p_i = c + r_i$ a absolútna poloha je $p_i = c + Rr_{0i}$ ,
 kde R zodpovedá matici rotácie a $r_{0i}$ je poloha i-tej častice na začiatku. \\
 Inerčný tenzor potom vieme definovať ako:
-$$TODO VZOREC$$
+$$ J = - \sum m_i r_{i}^{times} r_{i}^{times} = \sum m_i 
+\begin{pmatrix}
+r_{iy}^{2}+r_{iz}^{2}	&	-r_{ix}r_{iy}	& 	-r_{ix}r_{iz}\\
+-r_{iy}r_{iz}			&	r_{ix}^{2}+r_{iz}^{2} 	& -r_{iy}r_{iz} \\
+-r_{iz}r_{ix}			& 	-r_{iz}r_{iy}	& r_{ix}^{2}+r_{iy}^{2}
+\end{pmatrix}
+$$
 Označenie r × značí antisymetrickú maticu vektorového súčinu:
-$$TODO VZOREC$$
+$$
+r^{\times} = 
+\begin{pmatrix}
+0	& -a_z	& +a_y	\\
++a_z	&	0	&	-a_x	\\
+-a_y	&	+a_x	&	0
+\end{pmatrix}
+$$
 Narozdieľ od hmotnosti je inerčný senzor závislý od času. Keďže teleso sa nikdy nede-
 formuje, môžeme výpočet inerčného tenzora iba na začiatku a jeho zmenu dopočítavat ’
 pomocou matice rotácie:
@@ -103,132 +194,14 @@ $$ J^{-1} = RJ_{0}^{-1}R^{T}$$
 
 
 
-\begin{align} 
-\begin{split}
-(x+y)^3 	&= (x+y)^2(x+y)\\
-&=(x^2+2xy+y^2)(x+y)\\
-&=(x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3)\\
-&=x^3+3x^2y+3xy^2+y^3
-\end{split}					
-\end{align}
+% \begin{align} 
+% \begin{split}
+% (x+y)^3 	&= (x+y)^2(x+y)\\
+% &=(x^2+2xy+y^2)(x+y)\\
+% &=(x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3)\\
+% &=x^3+3x^2y+3xy^2+y^3
+% \end{split}					
+% \end{align}
 
-
-%------------------------------------------------
-
-
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 1
-%----------------------------------------------------------------------------------------
-
-\section{Problem title}
-
-\lipsum[2] % Dummy text
-
-\begin{align} 
-\begin{split}
-(x+y)^3 	&= (x+y)^2(x+y)\\
-&=(x^2+2xy+y^2)(x+y)\\
-&=(x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3)\\
-&=x^3+3x^2y+3xy^2+y^3
-\end{split}					
-\end{align}
-
-Tuhé teleso je také, ktorého tvar sa nikdy počas simulácie nezdeformuje. Kvôli tuhosti je
-celkový pohyb telesa zložený z lineárneho pohybu ťažiska telesa a s rotácie telesa okolo
-svojho ťažiska.
-
-%------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsection{Heading on level 2 (subsection)}
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-\begin{align}
-A = 
-\begin{bmatrix}
-A_{11} & A_{21} \\
-A_{21} & A_{22}
-\end{bmatrix}
-\end{align}
-Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-
-%------------------------------------------------
-
-\subsubsection{Heading on level 3 (subsubsection)}
-
-\lipsum[3] % Dummy text
-
-\paragraph{Heading on level 4 (paragraph)}
-
-\lipsum[6] % Dummy text
-
-%----------------------------------------------------------------------------------------
-%	PROBLEM 2
-%----------------------------------------------------------------------------------------
-
-\section{Lists}
-
-%------------------------------------------------
-
-\subsection{Example of list (3*itemize)}
-\begin{itemize}
-	\item First item in a list 
-		\begin{itemize}
-		\item First item in a list 
-			\begin{itemize}
-			\item First item in a list 
-			\item Second item in a list 
-			\end{itemize}
-		\item Second item in a list 
-		\end{itemize}
-	\item Second item in a list 
-\end{itemize}
-
-%------------------------------------------------
-
-\subsection{Example of list (enumerate)}
-\begin{enumerate}
-\item First item in a list 
-\item Second item in a list 
-\item Third item in a list
-\end{enumerate}
-
-%----------------------------------------------------------------------------------------
 
 \end{document}

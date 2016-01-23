@@ -17,6 +17,7 @@ namespace KeyFraming
         List<Cube> allFrames;
         int currentFrame = 0;
         bool animate = false;
+        private KeyFramesControl.InterpolationType interpolationType;
 
         public Form1()
         {
@@ -83,7 +84,7 @@ namespace KeyFraming
                 timer1.Interval = 1000 / fps;
                 slider.kfc.fps = fps;
             }
-            allFrames = slider.kfc.generateAllFrames();
+            allFrames = slider.kfc.generateAllFrames(interpolationType);
             animate = true;
             currentFrame = 0;
             timer1.Enabled = true;
@@ -112,6 +113,47 @@ namespace KeyFraming
                     Invalidate();
                 }
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            setInterpolationTypeByRadioBtn();
+        }
+        
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void setInterpolationTypeByRadioBtn()
+        {
+            int result2 = 0;
+            foreach (Control control in this.groupBox1.Controls)
+            {
+                if (control is RadioButton)
+                {
+                    RadioButton radio = control as RadioButton;
+                    if (radio.Checked)
+                    {
+                        result2 = radio.TabIndex;
+                    }
+                }
+            }
+            switch (result2)
+            {
+                case 2:
+                    interpolationType = KeyFramesControl.InterpolationType.NextNeighbour;
+                    break;
+                case 3:
+                    interpolationType = KeyFramesControl.InterpolationType.Linear;
+                    break;
+                default:
+                    interpolationType = KeyFramesControl.InterpolationType.Bezier;
+                    break;
+
+            }
+             
         }
     }
 }

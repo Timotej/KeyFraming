@@ -22,6 +22,8 @@ namespace KeyFraming
         public double current;
         
 
+
+
         public Slider(int sx, int sy, int ex, int ey, Color sc)
         {
             startx = sx;

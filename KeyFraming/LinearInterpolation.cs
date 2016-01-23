@@ -67,11 +67,22 @@ namespace KeyFraming
         }
 
         private Point3D bezierInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)
-        {
-            //TODO
-            return new Point3D();
+        {            
+            var bezierT = (actualTime - startingTime) / (nextTime - startingTime);
+
+            var pivot1 = new Point3D(50, 50, 50);
+            var pivot2 = new Point3D(50, 50, 50);
+
+
+            return bezierCalc(bezierT, startingPosition, pivot1, pivot2, nextPosition);            
+            //var deltaR = (to['recr'] - from['recr']) * bezierT;        
         }
 
+
+        private Point3D bezierCalc(double actualTime, Point3D p0, Point3D p1, Point3D p2, Point3D p3)
+        {
+            return Math.Pow((1 - actualTime), 3) * p0 + 3 * Math.Pow((1 - actualTime), 2) * actualTime * p1 + 3 * (1 - actualTime) * Math.Pow(actualTime, 2) * p2 + Math.Pow(actualTime, 3) * p3;
+        }
 
 
         public Point3D linearInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)

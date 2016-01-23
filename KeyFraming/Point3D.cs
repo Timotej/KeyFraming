@@ -20,5 +20,21 @@
             Y = y;
             Z = z;
         }
+
+        public static Point3D operator *(Point3D point, double number)
+        {
+            return new Point3D(point.X * number, point.Y * number, point.Z * number);
+        }
+
+        public static Point3D operator *(double number, Point3D point)
+        {
+            return new Point3D(point.X * number, point.Y * number, point.Z * number);
+        }
+
+        public static Point3D operator +(Point3D p0, Point3D p1)
+        {
+            return new Point3D(p0.X + p1.X, p0.Y + p1.Y, p0.Z + p1.Z);
+        }
+
     }
 }

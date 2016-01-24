@@ -36,6 +36,7 @@ namespace KeyFraming
             cube = new Cube();
 
             textBox1.Text = "30";
+            setInterpolationTypeByRadioBtn();
         }
 
 
@@ -47,15 +48,17 @@ namespace KeyFraming
             p.Width = 2;
             e.Graphics.DrawRectangle(p, 0, 0, 600, 400);
             
-            slider.drawSlider(e.Graphics);
-
+            float progressPercentage = (allFrames != null) ? ((float)(currentFrame/(float)allFrames.Count)) : 0; 
+            slider.drawSlider(e.Graphics, progressPercentage);
+            
+            var drawBezierPivots = interpolationType == KeyFramesControl.InterpolationType.Bezier;
             if (animate)
             {
-                allFrames[currentFrame].drawCube(e.Graphics);
+                allFrames[currentFrame].drawCube(e.Graphics, drawBezierPivots);                
             }
             else
             {
-                slider.kfc.keyframes[slider.current].drawCube(e.Graphics);
+                slider.kfc.keyframes[slider.current].drawCube(e.Graphics, drawBezierPivots);
             }
 
         }
@@ -102,14 +105,36 @@ namespace KeyFraming
             Invalidate();
         }
 
+
+
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.X >= 0 && e.X <= 600 - cube.size && e.Y >= 0 && e.Y <= 400 - cube.size) 
+            var currentCube = slider.kfc.keyframes[slider.current];
+            
+            //if (e.X >= 0 && e.X <= 600 - cube.size && e.Y >= 0 && e.Y <= 400 - cube.size)
+            if(currentCube.isClickingInsideCube(e.X, e.Y))
             {
 
-                if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+                if (e.Button == MouseButtons.Left)
+                {                    
+                    currentCube.setNewOrigin(e.X-(currentCube.size/2), e.Y- (currentCube.size / 2));
+
+                    //var prevCube = slider.kfc.getPreviousKeyframe(slider.current);
+                    //if(prevCube!=null) prevCube.CalculatePivotsByNextCube(currentCube);
+                    //var nextCube = slider.kfc.getPreviousKeyframe(slider.current);
+                    //if (nextCube != null) currentCube.CalculatePivotsByNextCube(nextCube);
+
+                    Invalidate();
+                }
+            }
+
+            var selectedPivot = currentCube.getSomePivotIfBeingClicked(e.X, e.Y);
+            if (selectedPivot!=null)
+            {
+                if (e.Button == MouseButtons.Left)
                 {
-                    slider.kfc.keyframes[slider.current].setNewOrigin(e.X, e.Y);
+                    selectedPivot.X = e.X- (currentCube.pivotSize/2);
+                    selectedPivot.Y = e.Y- (currentCube.pivotSize / 2);
                     Invalidate();
                 }
             }
@@ -148,12 +173,14 @@ namespace KeyFraming
                 case 3:
                     interpolationType = KeyFramesControl.InterpolationType.Linear;
                     break;
-                default:
+                case 4:
                     interpolationType = KeyFramesControl.InterpolationType.Bezier;
+                    break;
+                default:
                     break;
 
             }
-             
+            Invalidate();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace KeyFraming
             current = 0.0f;
         }
 
-        public void drawSlider(Graphics g)
+        public void drawSlider(Graphics g, float progress)
         {
             Pen p = new Pen(sliderColor);
             p.Width = 3;
@@ -49,6 +49,9 @@ namespace KeyFraming
             foreach (KeyValuePair<double, SliderPoint> entry in sliderPoints) {
                 entry.Value.drawSliderPoint(g, p);
             }
+
+            g.DrawLine(p,new Point(startx+ (int)((progress) *(endx-startx)), starty+20),new Point(startx+ (int)((progress) *(endx - startx)), starty-20));
+            
             
         }
 

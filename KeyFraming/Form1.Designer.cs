@@ -68,6 +68,7 @@
             this.radioButton2.TabIndex = 3;
             this.radioButton2.Text = "Linear interpolation";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -78,6 +79,7 @@
             this.radioButton3.TabIndex = 4;
             this.radioButton3.Text = "Cubic Bezier \r\ncurve interpolation";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // textBox1
             // 

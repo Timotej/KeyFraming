@@ -36,5 +36,11 @@
             return new Point3D(p0.X + p1.X, p0.Y + p1.Y, p0.Z + p1.Z);
         }
 
+
+        public override string ToString()
+        {
+            return ""+X+" "+Y+" "+Z;
+        }
+
     }
 }

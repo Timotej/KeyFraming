@@ -26,9 +26,36 @@ namespace KeyFraming
         public void AddKeyFrame(double time, Cube c)
         {
             keyframes.Add(time, c);
+            
             orderedTimes = keyframes.Keys.ToList();
             orderedTimes.Sort();
-            
+            var prevCube = getPreviousKeyframe(time);
+            if (prevCube != null)
+            {
+                prevCube.CalculatePivotsByNextCube(c);
+            }
+
+
+        }
+
+        public Cube getPreviousKeyframe(double currentTime)
+        {
+            var prevIndex = orderedTimes.FindIndex(a => a == currentTime) - 1;
+            if (prevIndex >= 0)
+            {
+                return keyframes[orderedTimes[prevIndex]];
+            }
+            return null;                
+        }
+
+        public Cube getNextKeyframe(double currentTime)
+        {
+            var nextIndex = orderedTimes.FindIndex(a => a == currentTime) + 1;
+            if (nextIndex < orderedTimes.Count)
+            {
+                return keyframes[orderedTimes[nextIndex]];
+            }
+            return null;
         }
 
         public List<Cube> generateAllFrames(InterpolationType interpolationType)
@@ -39,7 +66,7 @@ namespace KeyFraming
             for (int i = 0; i < orderedTimes.Count - 1; i++) {
                 first = orderedTimes[i];
                 second = orderedTimes[i + 1];
-                for (double d = first; d < second; d += 1.0f / fps) {
+                for (double d = first; d <= second; d += 1.0f / fps) {
                     Cube c = null;
                     switch (interpolationType) {
                         case InterpolationType.Bezier:
@@ -50,6 +77,7 @@ namespace KeyFraming
                             break;
                         default:
                             c = nearestInterpolateCube(d, keyframes[second], second, keyframes[first], first);
+                            
                             break;
 
                     }
@@ -74,15 +102,15 @@ namespace KeyFraming
         {
             Cube c = new Cube();
 
-            c.point1 = linearInterpolatePoint(actualTime, nextPosition.point1, nextTime, startingPosition.point1, startingTime);
-            c.point2 = linearInterpolatePoint(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime);
-            c.point3 = linearInterpolatePoint(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime);
-            c.point4 = linearInterpolatePoint(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime);
+            c.origin = linearInterpolatePoint(actualTime, nextPosition.origin, nextTime, startingPosition.origin, startingTime);
+            //c.point2 = linearInterpolatePoint(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime);
+            //c.point3 = linearInterpolatePoint(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime);
+            //c.point4 = linearInterpolatePoint(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime);
 
-            c.point5 = linearInterpolatePoint(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime);
-            c.point6 = linearInterpolatePoint(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime);
-            c.point7 = linearInterpolatePoint(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime);
-            c.point8 = linearInterpolatePoint(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime);
+            //c.point5 = linearInterpolatePoint(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime);
+            //c.point6 = linearInterpolatePoint(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime);
+            //c.point7 = linearInterpolatePoint(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime);
+            //c.point8 = linearInterpolatePoint(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime);
             return c;
         }
 
@@ -91,27 +119,23 @@ namespace KeyFraming
         public Cube bezierInterpolateCube(double actualTime, Cube nextPosition, double nextTime, Cube startingPosition, double startingTime)
         {
             Cube c = new Cube();
+            
+            c.origin = bezierInterpolate(actualTime, nextPosition.origin, nextTime, startingPosition.origin, startingTime,startingPosition.pivot1, startingPosition.pivot2);
+            //c.point2 = bezierInterpolate(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime, startingPosition.pivot1, startingPosition.pivot2);
+            //c.point3 = bezierInterpolate(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime, startingPosition.pivot1, startingPosition.pivot2);
+            //c.point4 = bezierInterpolate(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime, startingPosition.pivot1, startingPosition.pivot2);
 
-            c.point1 = bezierInterpolate(actualTime, nextPosition.point1, nextTime, startingPosition.point1, startingTime);
-            c.point2 = bezierInterpolate(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime);
-            c.point3 = bezierInterpolate(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime);
-            c.point4 = bezierInterpolate(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime);
-
-            c.point5 = bezierInterpolate(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime);
-            c.point6 = bezierInterpolate(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime);
-            c.point7 = bezierInterpolate(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime);
-            c.point8 = bezierInterpolate(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime);
+            //c.point5 = bezierInterpolate(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime, startingPosition.pivot1, startingPosition.pivot2);
+            //c.point6 = bezierInterpolate(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime, startingPosition.pivot1, startingPosition.pivot2);
+            //c.point7 = bezierInterpolate(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime, startingPosition.pivot1, startingPosition.pivot2);
+            //c.point8 = bezierInterpolate(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime, startingPosition.pivot1, startingPosition.pivot2);
             return c;
         }
 
-        private Point3D bezierInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)
+        private Point3D bezierInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime, Point3D pivot1, Point3D pivot2)
         {
             var bezierT = (actualTime - startingTime) / (nextTime - startingTime);
-
-            var pivot1 = new Point3D(50, 50, 50);
-            var pivot2 = new Point3D(50, 50, 50);
-
-
+            
             return bezierCalc(bezierT, startingPosition, pivot1, pivot2, nextPosition);
             //var deltaR = (to['recr'] - from['recr']) * bezierT;        
         }
@@ -125,22 +149,23 @@ namespace KeyFraming
         public Cube nearestInterpolateCube(double actualTime, Cube nextPosition, double nextTime, Cube startingPosition, double startingTime)
         {
             Cube c = new Cube();
+            
+            c.origin = nearestInterpolate(actualTime, nextPosition.origin, nextTime, startingPosition.origin, startingTime);
+            //c.point2 = nearestInterpolate(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime);
+            //c.point3 = nearestInterpolate(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime);
+            //c.point4 = nearestInterpolate(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime);
 
-            c.point1 = nearestInterpolate(actualTime, nextPosition.point1, nextTime, startingPosition.point1, startingTime);
-            c.point2 = nearestInterpolate(actualTime, nextPosition.point2, nextTime, startingPosition.point2, startingTime);
-            c.point3 = nearestInterpolate(actualTime, nextPosition.point3, nextTime, startingPosition.point3, startingTime);
-            c.point4 = nearestInterpolate(actualTime, nextPosition.point4, nextTime, startingPosition.point4, startingTime);
-
-            c.point5 = nearestInterpolate(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime);
-            c.point6 = nearestInterpolate(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime);
-            c.point7 = nearestInterpolate(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime);
-            c.point8 = nearestInterpolate(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime);
+            //c.point5 = nearestInterpolate(actualTime, nextPosition.point5, nextTime, startingPosition.point5, startingTime);
+            //c.point6 = nearestInterpolate(actualTime, nextPosition.point6, nextTime, startingPosition.point6, startingTime);
+            //c.point7 = nearestInterpolate(actualTime, nextPosition.point7, nextTime, startingPosition.point7, startingTime);
+            //c.point8 = nearestInterpolate(actualTime, nextPosition.point8, nextTime, startingPosition.point8, startingTime);
             return c;
         }
 
         private Point3D nearestInterpolate(double actualTime, Point3D nextPosition, double nextTime, Point3D startingPosition, double startingTime)
         {
-            return nextPosition;
+            Console.WriteLine(startingTime+" " +actualTime + " " + nextTime);
+            return (actualTime == nextTime) ? nextPosition: startingPosition;            
         }
 
 

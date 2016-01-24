@@ -9,34 +9,51 @@ namespace KeyFraming
 {
     class Cube
     {
-        public Point3D point1;
-        public Point3D point2;
-        public Point3D point3;
-        public Point3D point4;
-        public Point3D point5;
-        public Point3D point6;
-        public Point3D point7;
-        public Point3D point8;
+        public double X { get { return point1.X; } set { point1.X = value;  updateCubeByPoint1(); } }
+        public double Y { get { return point1.Y; } set { point1.Y = value;  updateCubeByPoint1(); } }
+        public double Z { get { return point1.Z; } set { point1.Z = value;  updateCubeByPoint1(); } }
+
+        public Point3D origin { get { return point1; } set { point1 = value; updateCubeByPoint1(); } }
+
+        private Point3D point1;        
+        private Point3D point2;
+        private Point3D point3;
+        private Point3D point4;
+        private Point3D point5;
+        private Point3D point6;
+        private Point3D point7;
+        private Point3D point8;
         public int size;
+        public int pivotSize = 15;
+
+        public Point3D pivot1;
+        public Point3D pivot2;
 
         public Cube() {
 
             size = 50;
 
             point1 = new Point3D(0, 0, 0);
-            point2 = new Point3D(size, 0, 0);
-            point3 = new Point3D(size, size, 0);
-            point4 = new Point3D(0, size, 0);
+            updateCubeByPoint1();
 
-            point5 = new Point3D(0, 0, -size);
-            point6 = new Point3D(size, 0, -size);
-            point7 = new Point3D(size, size, -size);
-            point8 = new Point3D(0, size, -size);
+            pivot1 = new Point3D(200,200,0);
+            pivot2 = new Point3D(300,300,0);
 
-            
+        }
+        
+        public void updateCubeByPoint1()
+        {
+            point2 = new Point3D(point1.X+size, point1.Y, point1.Z);
+            point3 = new Point3D(point1.X+size, point1.Y+size, point1.Z);
+            point4 = new Point3D(point1.X, point1.Y+size, point1.Z);
+
+            point5 = new Point3D(point1.X, point1.Y, point1.Z - size);
+            point6 = new Point3D(point1.X+size, point1.Y, point1.Z - size);
+            point7 = new Point3D(point1.X+size, point1.Y+size, point1.Z - size);
+            point8 = new Point3D(point1.X, point1.Y+size, point1.Z - size);
         }
 
-        public void drawCube(Graphics g)
+        public void drawCube(Graphics g, bool drawBezierPivots)
         {
             drawLine(point1, point2, g);
             drawLine(point2, point3, g);
@@ -53,13 +70,35 @@ namespace KeyFraming
             drawLine(point3, point7, g);
             drawLine(point4, point8, g);
 
+            if (drawBezierPivots)
+            {                
+                drawPivots(g);
+            }
+
+
         }
+
+        public void CalculatePivotsByNextCube(Cube nextCube)
+        {
+
+            this.pivot1 = new Point3D((this.point1.X - nextCube.point1.X) / 2, (this.point1.Y - nextCube.point1.Y) / 2 - 20, (this.point1.Z - nextCube.point1.Z) / 2);
+            this.pivot2 = new Point3D((this.point1.X - nextCube.point1.X) / 2, (this.point1.Y - nextCube.point1.Y) / 2 + 20, (this.point1.Z - nextCube.point1.Z) / 2);
+
+        }        
 
         public void drawLine(Point3D a, Point3D b, Graphics g) {
             Pen p = new Pen(Color.Black);
             p.Width = 3;
 
             g.DrawLine(p, (float)a.X, (float)a.Y, (float)b.X, (float)b.Y);
+        }
+
+        public void drawPivots(Graphics g)
+        {
+            Pen p = new Pen(Color.Black);
+            p.Width = 3;
+            if(pivot1!=null) g.DrawEllipse(p, (float)pivot1.X, (float)pivot1.Y, pivotSize, pivotSize);
+            if (pivot2 != null) g.DrawEllipse(p, (float)pivot2.X, (float)pivot2.Y, pivotSize, pivotSize);
         }
 
         public void setNewOrigin(int x, int y)
@@ -73,6 +112,19 @@ namespace KeyFraming
             point6 = new Point3D(x + size, y, -size);
             point7 = new Point3D(x + size, y + size, -size);
             point8 = new Point3D(x, y + size, -size);
+        }
+
+
+        public bool isClickingInsideCube(double x, double y)
+        {
+            return (point1.X < x && point1.X + size > x && point1.Y < y && point1.Y + size > y);
+        }
+
+        public Point3D getSomePivotIfBeingClicked(double x, double y)
+        {            
+            if (pivot1 != null && pivot1.X < x && pivot1.X + pivotSize > x && pivot1.Y < y && pivot1.Y + pivotSize > y) return pivot1;
+            if (pivot2 != null && pivot2.X < x && pivot2.X + pivotSize > x && pivot2.Y < y && pivot2.Y + pivotSize > y) return pivot2;
+            return null;
         }
 
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OpenGL4NET; 
 
 namespace KeyFraming
 {
@@ -17,6 +18,7 @@ namespace KeyFraming
         List<Cube> allFrames;
         int currentFrame = 0;
         bool animate = false;
+        RenderingContext rc;
         private KeyFramesControl.InterpolationType interpolationType;
 
         public Form1()
@@ -74,6 +76,7 @@ namespace KeyFraming
             else {
                 timer1.Enabled = false;
                 animate = false;
+                slider.current = 5.0f;
             }
             Invalidate();
         }
@@ -97,10 +100,12 @@ namespace KeyFraming
         {
             if (e.Button == MouseButtons.Left) {
                 slider.addSliderPoint(e.X, e.Y);
+                Invalidate();
             }
             if (e.Button == MouseButtons.Right)
             {
                 slider.removeSliderPoint(e.X, e.Y);
+                Invalidate();
             }
             Invalidate();
         }
@@ -111,14 +116,15 @@ namespace KeyFraming
         {
             var currentCube = slider.kfc.keyframes[slider.current];
             
-            //if (e.X >= 0 && e.X <= 600 - cube.size && e.Y >= 0 && e.Y <= 400 - cube.size)
-            if(currentCube.isClickingInsideCube(e.X, e.Y))
-            {
+            if (e.X > 25 && e.X < 625 - cube.size && e.Y > 25 && e.Y < 425 - cube.size)
+            { 
+            //if(currentCube.isClickingInsideCube(e.X, e.Y))
+            //{
 
                 if (e.Button == MouseButtons.Left)
                 {                    
                     currentCube.setNewOrigin(e.X-(currentCube.size/2), e.Y- (currentCube.size / 2));
-
+                    
                     //var prevCube = slider.kfc.getPreviousKeyframe(slider.current);
                     //if(prevCube!=null) prevCube.CalculatePivotsByNextCube(currentCube);
                     //var nextCube = slider.kfc.getPreviousKeyframe(slider.current);
@@ -131,7 +137,7 @@ namespace KeyFraming
             var selectedPivot = currentCube.getSomePivotIfBeingClicked(e.X, e.Y);
             if (selectedPivot!=null)
             {
-                if (e.Button == MouseButtons.Left)
+                if (e.Button == MouseButtons.Right)
                 {
                     selectedPivot.X = e.X- (currentCube.pivotSize/2);
                     selectedPivot.Y = e.Y- (currentCube.pivotSize / 2);
@@ -181,6 +187,19 @@ namespace KeyFraming
 
             }
             Invalidate();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            double d = Math.Tan(60 * Math.PI / 360);
+            double r = 1.0 * ClientSize.Width / ClientSize.Height;
+            rc = RenderingContext.CreateContext(this);
+            gl.Viewport(0, 0, ClientSize.Width, ClientSize.Height);
+            gl.MatrixMode(GL.PROJECTION);
+            gl.Frustum(-d * r, d * r, -d, +d, 1, 1000);
+            gl.MatrixMode(GL.MODELVIEW);
+            gl.ClearDepth(1);
+            gl.Enable(GL.DEPTH_TEST);
         }
     }
 }

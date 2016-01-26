@@ -131,6 +131,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "KeyFrames";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.groupBox1.ResumeLayout(false);

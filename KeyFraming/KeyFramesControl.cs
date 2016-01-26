@@ -25,7 +25,16 @@ namespace KeyFraming
 
         public void AddKeyFrame(double time, Cube c)
         {
-            keyframes.Add(time, c);
+            Cube lastCube = new Cube();
+            for (int i = 0; i < orderedTimes.Count - 1; i++)  {
+                if (orderedTimes[i] < time) {
+                    keyframes.TryGetValue(orderedTimes[i], out lastCube);
+                }
+            }
+            Cube cc = new Cube();
+            cc.origin = lastCube.origin;
+
+            keyframes.Add(time, cc);
             
             orderedTimes = keyframes.Keys.ToList();
             orderedTimes.Sort();
@@ -36,6 +45,13 @@ namespace KeyFraming
             }
 
 
+        }
+
+        public void RemoveKeyFrame(double time) {
+            keyframes.Remove(time);
+            orderedTimes = keyframes.Keys.ToList();
+            orderedTimes.Sort();
+            
         }
 
         public Cube getPreviousKeyframe(double currentTime)

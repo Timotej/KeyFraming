@@ -77,6 +77,7 @@ namespace KeyFraming
                 sliderPoints.Add(x / 100f, sp);
                 kfc.AddKeyFrame(x / 100f, new Cube());
                 current = x / 100f;
+                
             } 
         }
 
@@ -109,6 +110,7 @@ namespace KeyFraming
                 }
             }
             sliderPoints.Remove(delete);
+            kfc.RemoveKeyFrame(delete);
         }
 
         public void deselectAll()

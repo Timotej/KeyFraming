@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenGL4NET;
 
 namespace KeyFraming
 {
@@ -25,6 +26,7 @@ namespace KeyFraming
         private Point3D point8;
         public int size;
         public int pivotSize = 15;
+       
 
         public Point3D pivot1;
         public Point3D pivot2;
@@ -51,6 +53,7 @@ namespace KeyFraming
             point6 = new Point3D(point1.X+size, point1.Y, point1.Z - size);
             point7 = new Point3D(point1.X+size, point1.Y+size, point1.Z - size);
             point8 = new Point3D(point1.X, point1.Y+size, point1.Z - size);
+
         }
 
         public void drawCube(Graphics g, bool drawBezierPivots)
@@ -70,6 +73,7 @@ namespace KeyFraming
             drawLine(point3, point7, g);
             drawLine(point4, point8, g);
 
+            
             if (drawBezierPivots)
             {                
                 drawPivots(g);
@@ -126,6 +130,10 @@ namespace KeyFraming
             if (pivot2 != null && pivot2.X < x && pivot2.X + pivotSize > x && pivot2.Y < y && pivot2.Y + pivotSize > y) return pivot2;
             return null;
         }
+
+      
+
+       
 
     }
 }

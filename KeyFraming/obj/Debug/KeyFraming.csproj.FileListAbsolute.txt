@@ -16,3 +16,4 @@ D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csp
 D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Form1.resources
 D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.Properties.Resources.resources
 D:\Projects\Shared Projects\Skola\KeyFraming\KeyFraming\obj\Debug\KeyFraming.csproj.GenerateResource.Cache
+C:\Users\timok\documents\visual studio 2015\Projects\KeyFraming\KeyFraming\bin\Debug\OpenGL4Net.dll

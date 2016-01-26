@@ -54,10 +54,27 @@ namespace KeyFraming
             point7 = new Point3D(point1.X+size, point1.Y+size, point1.Z - size);
             point8 = new Point3D(point1.X, point1.Y+size, point1.Z - size);
 
+            int skewx = 10;
+            int skewy = 10;
+            point5.X += skewx;
+            point5.Y += -skewy;
+
+            point6.X += skewx;
+            point6.Y += -skewy;
+
+            point7.X += skewx;
+            point7.Y += -skewy;
+
+            point8.X += skewx;
+            point8.Y += -skewy;
         }
 
         public void drawCube(Graphics g, bool drawBezierPivots)
         {
+            
+
+
+
             drawLine(point1, point2, g);
             drawLine(point2, point3, g);
             drawLine(point3, point4, g);
@@ -66,14 +83,15 @@ namespace KeyFraming
             drawLine(point5, point6, g);
             drawLine(point6, point7, g);
             drawLine(point7, point8, g);
-            drawLine(point8, point1, g);
+            drawLine(point8, point5, g);
 
             drawLine(point1, point5, g);
             drawLine(point2, point6, g);
             drawLine(point3, point7, g);
             drawLine(point4, point8, g);
+            
+           
 
-            
             if (drawBezierPivots)
             {                
                 drawPivots(g);
@@ -116,6 +134,20 @@ namespace KeyFraming
             point6 = new Point3D(x + size, y, -size);
             point7 = new Point3D(x + size, y + size, -size);
             point8 = new Point3D(x, y + size, -size);
+
+            int skewx = 14;
+            int skewy = 12;
+            point5.X += skewx;
+            point5.Y += -skewy;
+
+            point6.X += skewx;
+            point6.Y += -skewy;
+
+            point7.X += skewx;
+            point7.Y += -skewy;
+
+            point8.X += skewx;
+            point8.Y += -skewy;
         }
 
 
